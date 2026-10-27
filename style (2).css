@@ -1,0 +1,110 @@
+:root{--navbg:rgba(234,242,255,.85);--mut:#5b6f94;--inp:#f7faff;--sh:rgba(37,99,235,.30);--bg:#eef4ff;--c1:#dbe7ff;--c2:#bfd4ff;--c3:#3b82f6;--pri:#1d4ed8;--dk:#0f2557;--ln:#c7d7f5;--w:#fff}
+*{box-sizing:border-box}body{margin:0;font:16px/1.65 Inter,system-ui,sans-serif;background:var(--bg);color:var(--dk)}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;line-height:1.15;margin:.2em 0 .5em}h1{font-size:3.2rem}h2{font-size:2rem}h3{font-size:1.4rem}
+a{color:var(--pri)}.wrap{max-width:1040px;margin:0 auto;padding:28px 20px 60px}
+.nav{display:flex;align-items:center;gap:18px;padding:14px 28px;background:var(--navbg);border-bottom:1px solid var(--ln);position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.logo{font:700 1.7rem 'Cormorant Garamond',serif;text-decoration:none;color:var(--dk)}.logo span{color:var(--pri)}
+.nav nav{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-left:auto}.nav nav a{text-decoration:none;color:var(--dk);font-size:.93rem;font-weight:500}.nav nav a:hover{color:var(--pri)}
+.nav .sos{background:#fff;border:1px solid var(--pri);padding:2px 12px;border-radius:99px}.burger{display:none;margin-left:auto;background:none;border:0;font-size:1.5rem}
+.btn,button.btn{display:inline-block;background:var(--pri);color:#fff!important;border:0;padding:11px 22px;border-radius:10px;font:600 .95rem Inter,sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--dk)}.btn.sm{padding:6px 16px}.btn.ghost{background:var(--c1);color:var(--dk)!important;border:1px solid var(--ln)}
+.hero{padding:56px 40px;border-radius:22px;background:linear-gradient(135deg,var(--c2),var(--c1) 55%,#fff);border:1px solid var(--ln)}.hero p{max-width:520px;font-size:1.1rem}
+.card{background:var(--w);border:1px solid var(--ln);border-radius:16px;padding:22px;margin:16px 0;box-shadow:0 6px 24px -14px var(--sh)}.narrow{max-width:440px;margin:30px auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.grid .card{margin:0}
+form.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-top:22px}form.row label{flex:1;min-width:150px}
+label{display:block;font-weight:500;font-size:.9rem;margin:10px 0}input,select,textarea{display:block;width:100%;margin-top:5px;padding:10px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--inp);font:inherit;color:var(--dk)}
+input:focus,select:focus,textarea:focus,.btn:focus-visible{outline:2px solid var(--c3);outline-offset:1px}
+.err,.flash{padding:10px 14px;border-radius:10px;margin:10px 0}.err{background:#fee2e2;color:#7f1d1d}.flash{background:var(--c1);border:1px solid var(--c3)}
+.pill{display:inline-block;padding:2px 12px;border-radius:99px;background:var(--c1);border:1px solid var(--ln);font-size:.82rem}
+.pill.running,.pill.verified,.pill.confirmed,.pill.resolved{background:#d1fae5;border-color:#6ee7b7}.pill.cancelled,.pill.rejected,.pill.high{background:#fee2e2;border-color:#fca5a5}.pill.delayed,.pill.pending,.pill.medium{background:#fef3c7;border-color:#fcd34d}
+.trip{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}.trip h3{margin:0}.muted{color:var(--mut);font-size:.9rem}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}th,td{padding:10px 12px;border-bottom:1px solid var(--ln);text-align:left;font-size:.92rem}th{background:var(--c1)}.scroll{overflow-x:auto}
+.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:340px}.seats label{margin:0}.seats input{display:none}
+.seats span{display:block;text-align:center;padding:9px 0;border:1px solid var(--ln);border-radius:9px;background:#fff;cursor:pointer}.seats input:checked+span{background:var(--pri);color:#fff}
+.seats input:disabled+span{background:#e2e8f0;color:#94a3b8;cursor:not-allowed}
+.ticket{border:2px dashed var(--pri);background:linear-gradient(#fff,var(--c1))}.big{font:700 2.2rem 'Cormorant Garamond',serif}iframe{width:100%;height:340px;border:1px solid var(--ln);border-radius:14px}
+footer{text-align:center;padding:26px;color:var(--mut);border-top:1px solid var(--ln)}
+@media(max-width:720px){.burger{display:block}.nav nav{display:none;width:100%;flex-direction:column;align-items:flex-start}body.open .nav nav{display:flex}h1{font-size:2.3rem}.hero{padding:34px 22px}}
+@media print{.nav,footer,.btn{display:none}}
+/* polish */
+body{font-family:Inter,'Hind Siliguri','Nirmala UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2{letter-spacing:-.01em}
+.nav{backdrop-filter:blur(12px);background:var(--navbg)}
+.nav nav a:not(.btn):not(.sos){position:relative;padding:4px 0}
+.nav nav a:not(.btn):not(.sos)::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--pri);transition:width .25s}
+.nav nav a:not(.btn):not(.sos):hover::after{width:100%}
+.card{transition:box-shadow .25s}.card:hover{box-shadow:0 16px 36px -20px color-mix(in srgb,var(--pri) 55%,transparent)}
+.btn{box-shadow:0 8px 18px -10px color-mix(in srgb,var(--pri) 80%,transparent);transition:transform .15s,background .2s}.btn:hover{transform:translateY(-1px)}
+.hero2{display:flex;gap:36px;flex-wrap:wrap;align-items:center;padding:48px 40px;border-radius:26px;border:1px solid var(--ln);background:radial-gradient(600px 300px at 92% 0,rgba(253,230,138,.45),transparent 70%),linear-gradient(135deg,#a5f3fc,#cffafe 55%,#fff)}
+.hero2>div{flex:1 1 320px}.hero2 h1{font-size:clamp(2.4rem,5vw,3.8rem)}.hero2 p{max-width:480px;font-size:1.08rem;margin-bottom:22px}
+.eyebrow{display:inline-block;margin-bottom:12px;padding:4px 14px;border-radius:99px;background:#fff;border:1px solid var(--ln);font:600 .72rem Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--pri)}
+.search{flex:1 1 340px;margin:0;padding:22px}.search label{margin:8px 0}.swap{display:block;margin:2px auto}
+.seg{display:flex;gap:6px;padding:4px;border-radius:12px;background:var(--c1)}.seg label{flex:1;margin:0}.seg input{display:none}
+.seg span{display:block;padding:9px;border-radius:9px;text-align:center;font-weight:600;font-size:.9rem;cursor:pointer}.seg input:checked+span{background:#fff;color:var(--pri);box-shadow:0 2px 8px -4px color-mix(in srgb,var(--pri) 60%,transparent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:22px 0 30px}
+.stats div{padding:16px;text-align:center;background:#fff;border:1px solid var(--ln);border-radius:14px}.stats b{display:block;font:700 1.9rem 'Cormorant Garamond',serif;color:var(--pri)}.stats span{font-size:.85rem;color:var(--mut)}
+.steps .n{display:grid;place-items:center;width:34px;height:34px;margin-bottom:8px;border-radius:50%;background:var(--pri);color:#fff;font-weight:700}
+.ico{display:grid;place-items:center;width:44px;height:44px;margin-bottom:10px;border-radius:12px;background:var(--c1);color:var(--pri)}
+
+/* Three separate portals: each gets its own colour and badge */
+.ptag{font:600 11px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;background:var(--pri);color:#fff;border-radius:999px;padding:3px 8px;margin-left:6px;vertical-align:middle}
+/* Portal colours: passenger = teal (default :root), student = violet, driver = emerald, admin = navy + gold */
+body.p-student{--navbg:rgba(245,243,255,.82);--mut:#6e5996;--inp:#fcfbff;--sh:rgba(109,79,194,.35);--bg:#f5f3ff;--c1:#ede9fe;--c2:#ddd6fe;--c3:#a78bfa;--pri:#6d4fc2;--dk:#2e1065;--ln:#ddd6fe}
+body.p-driver{--navbg:rgba(236,253,245,.82);--mut:#3f6f61;--inp:#f8fefc;--sh:rgba(4,120,87,.35);--bg:#ecfdf5;--c1:#d1fae5;--c2:#a7f3d0;--c3:#34d399;--pri:#047857;--dk:#064e3b;--ln:#bfe9d6}
+body.p-driver{--navbg:rgba(236,254,255,.82);--mut:#5a8695;--inp:#f8ffff;--sh:rgba(14,116,144,.35);--bg:#ecfeff;--c1:#cffafe;--c2:#a5f3fc;--c3:#22d3ee;--pri:#0e7490;--dk:#164e63;--ln:#b7e6ee} */
+body.p-admin{--navbg:rgba(244,246,251,.82);--mut:#585e6d;--inp:#fbfcfe;--sh:rgba(30,42,74,.35);--bg:#f4f6fb;--c1:#e6eaf4;--c2:#cfd6e8;--c3:#b8923b;--pri:#1e2a4a;--dk:#0f172a;--ln:#d5dbea}
+body.p-admin .ptag{background:#1e2a4a;color:#fff}
+body.p-admin{--navbg:rgba(244,246,251,.82);--mut:#585e6d;--inp:#fbfcfe;--sh:rgba(30,42,74,.35);--bg:#f4f6fb;--c1:#e6eaf4;--c2:#cfd6e8;--c3:#b8923b;--pri:#1e2a4a;--dk:#0f172a;--ln:#d5dbea}
+body.p-admin .ptag{background:#1e2a4a;color:#fff}
+
+/* ===== navigation as a left sidebar (desktop) ===== */
+@media(min-width:721px) and (max-width:899px){.nav{flex-wrap:nowrap;gap:16px;padding:12px 20px}.nav .logo{flex:none}.nav nav{flex-wrap:nowrap;gap:12px;min-width:0;overflow-x:auto;scrollbar-width:none;white-space:nowrap}.nav nav::-webkit-scrollbar{display:none}.nav nav a{font-size:.8rem;flex:none}}
+@media(min-width:900px){
+ body{padding-left:270px}
+ .nav{position:fixed!important;left:0;top:0;bottom:0;width:270px;box-sizing:border-box;display:flex!important;flex-direction:column!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:8px;padding:20px 14px;overflow-x:hidden;overflow-y:auto;background:#fff;border-right:1px solid var(--ln);border-bottom:0;backdrop-filter:none;z-index:20}
+ .nav .logo{display:block;padding:2px 10px 10px}
+ .nav .burger{display:none!important}
+ .nav nav{flex:1;display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;align-items:stretch!important;gap:2px;margin:0!important;width:100%;min-width:0;overflow:visible;white-space:normal}
+ .nav nav a,.nav nav a:not(.btn):not(.sos){display:flex;align-items:center;gap:12px;position:static;width:100%;box-sizing:border-box;padding:10px 14px;border-radius:12px;font-size:.97rem;font-weight:500;color:var(--dk)}
+ .nav nav a:not(.btn):not(.sos)::after{display:none}
+ .nav nav a::before{content:"\2022";flex:none;width:26px;text-align:center;font-size:1.2rem;line-height:1}
+ .nav nav a[href="search.php"]::before{content:"🚌"}
+ .nav nav a[href="areas.php"]::before{content:"🗺️"}
+ .nav nav a[href="nearby.php"]::before{content:"📍"}
+ .nav nav a[href="track.php"]::before{content:"🛰️"}
+ .nav nav a[href="reports.php"]::before{content:"⚠️"}
+ .nav nav a[href="groups.php"]::before{content:"👥"}
+ .nav nav a[href="plan.php"]::before{content:"🧭"}
+ .nav nav a[href="my_bookings.php"]::before{content:"🎫"}
+ .nav nav a[href="card.php"]::before{content:"💳"}
+ .nav nav a[href="sos.php"]::before{content:"🆘"}
+ .nav nav a[href="notifications.php"]::before{content:"🔔"}
+ .nav nav a[href="student.php"]::before{content:"🎓"}
+ .nav nav a[href="complaints.php"]::before{content:"💬"}
+ .nav nav a[href="profile.php"]::before{content:"👤"}
+ .nav nav a[href="logout.php"]::before{content:"🚪"}
+ .nav nav a[href="login.php"]::before{content:"🔑"}
+ .nav nav a[href="register.php"]::before{content:"✨"}
+ .nav nav a[href="driver.php"]::before{content:"📅"}
+ .nav nav a[href="verify_ticket.php"]::before{content:"✅"}
+ .nav nav a[href="admin.php"]::before{content:"🛠️"}
+ .nav nav a[href="admin_routes.php"]::before{content:"🛣️"}
+ .nav nav a[href="import_osm.php"]::before{content:"🌐"}
+ .nav nav a[href="interrupt_auto.php"]::before{content:"💸"}
+ .nav nav a[href="staff.php"]::before{content:"🎟️"}
+ .nav nav a[href="staff_card.php"]::before{content:"💳"}
+ .nav nav a[href="card_approve.php"]::before{content:"✅"}
+ .nav nav a[href="operator.php"]::before{content:"🚌"}
+ .nav nav a[href="assign_driver.php"]::before{content:"🧑‍✈️"}
+ .nav nav a[href="police.php"]::before{content:"👮"}
+ .nav nav a[href="police_control.php"]::before{content:"🚨"}
+ .nav nav a[href="longroutes.php"]::before{content:"🛣️"}
+ .nav nav a[href="driver_login.php"]::before{content:"🔑"}
+ .nav nav a[href="admin_login.php"]::before{content:"🔑"}
+ .nav nav a:hover{background:var(--c1);color:var(--pri)}
+ .nav nav a.on{background:var(--c1);color:var(--pri);font-weight:700}
+ .nav nav a.sos{background:#FEE2E2;color:#B91C1C;border:0;font-weight:700;padding:10px 14px;border-radius:12px;margin:6px 0}
+ .nav nav a.btn.sm{justify-content:center;margin-top:8px}.nav nav a.btn.sm::before{display:none}
+ .nav nav a[href="profile.php"]{margin-top:auto;border-top:1px solid var(--ln);border-radius:0 0 12px 12px;padding-top:14px}
+}
+@media print{body{padding-left:0}}

@@ -1,0 +1,120 @@
+/* Ride Track mobile app look: bottom tab bar, bigger touch targets, rounded cards */
+.tabbar{display:none}
+@media(max-width:720px){
+ body.has-tabs{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+ body.has-tabs .nav{padding:10px 16px;gap:8px;flex-wrap:nowrap}
+ body.has-tabs .logo{font-size:1.45rem}
+ body.has-tabs .burger{display:none}
+ body.has-tabs .nav nav{display:none}
+ body.has-tabs.open .nav nav{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:0;position:fixed;left:10px;right:10px;bottom:calc(80px + env(safe-area-inset-bottom));max-height:62vh;overflow:auto;background:var(--w);border:1px solid var(--ln);border-radius:20px;box-shadow:0 24px 60px -24px rgba(0,0,0,.5);padding:8px;z-index:40}
+ body.has-tabs.open .nav nav a{padding:14px 16px;border-radius:12px;font-size:1rem;color:var(--dk)}
+ body.has-tabs.open .nav nav a:hover{background:var(--c1)}
+ body.has-tabs.open .nav nav a::after{display:none}
+ body.has-tabs.open .nav nav .sos{background:#fee2e2;border:0;color:#991b1b;text-align:center;margin:4px 0}
+ body.has-tabs .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--w);border-top:1px solid var(--ln);padding:6px 6px calc(6px + env(safe-area-inset-bottom));box-shadow:0 -10px 28px -18px rgba(0,0,0,.4)}
+ .tabbar a,.tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;border:0;background:none;color:var(--mut);font:600 11px Inter,sans-serif;text-decoration:none;border-radius:14px;cursor:pointer}
+ .tabbar .ic{font-size:22px;line-height:1.1}
+ .tabbar .on{color:var(--pri);background:var(--c1)}
+ .wrap{padding:16px 14px 28px}
+ .btn{padding:13px 20px;border-radius:14px}
+ .card{border-radius:20px;padding:18px}
+ .hero2{padding:26px 18px;border-radius:24px}
+ input,select,textarea{padding:13px 14px;font-size:16px;border-radius:14px}
+ .stats{grid-template-columns:1fr 1fr}
+}
+
+/* ===== Desktop side menu (like a chat app): vertical menu on the left with icons ===== */
+@media(min-width:721px){
+ body{padding-left:250px}
+ .nav{position:fixed;left:0;top:0;bottom:0;width:250px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;flex-wrap:nowrap;gap:4px;padding:18px 12px 14px;overflow-y:auto;background:var(--w);border-bottom:0;border-right:1px solid var(--ln);backdrop-filter:none;z-index:30}
+ .nav .burger{display:none}
+ .nav .logo{display:flex;align-items:center;gap:8px;padding:4px 10px 16px;font-size:1.65rem}
+ .nav nav{flex:1;min-height:0;display:flex;flex-direction:column;align-items:stretch;gap:2px;margin:0;width:100%}
+ .nav nav a{display:flex;align-items:center;gap:12px;white-space:nowrap;flex:none;padding:10px 12px;border-radius:12px;font-size:.95rem;font-weight:500;color:var(--dk);text-decoration:none}
+ .nav nav a::after{display:none!important}
+ .nav nav a::before{content:"\25AB";width:22px;text-align:center;font-size:1.05rem;flex:none}
+ .nav nav a:hover{background:var(--c1);color:var(--dk)}
+ .nav nav a.on{background:var(--c1);color:var(--pri);font-weight:700}
+ .nav nav a.sos{background:#fee2e2;border:0;color:#991b1b;font-weight:700;margin:6px 0}
+ .nav nav a.btn{justify-content:center;margin-top:8px;color:#fff!important}
+ .nav nav a.btn::before{content:none}
+ .nav nav a[href="logout.php"]{margin-top:auto;border-top:1px solid var(--ln);border-radius:0 0 12px 12px;padding-top:14px}
+ .nav nav a[href^="index"]::before{content:"\1F3E0"}
+ .nav nav a[href^="search"]::before{content:"\1F50E"}
+ .nav nav a[href^="areas"]::before{content:"\1F5FA"}
+ .nav nav a[href^="near"]::before{content:"\1F4CD"}
+ .nav nav a[href^="track"]::before{content:"\1F68C"}
+ .nav nav a[href^="reports"]::before{content:"\26A0"}
+ .nav nav a[href^="groups"]::before{content:"\1F465"}
+ .nav nav a[href^="plan"]::before{content:"\1F9ED"}
+ .nav nav a[href^="my_bookings"]::before{content:"\1F3AB"}
+ .nav nav a[href^="card.php"]::before{content:"\1F4B3"}
+ .nav nav a[href^="sos"]::before{content:"\1F198"}
+ .nav nav a[href^="notifications"]::before{content:"\1F514"}
+ .nav nav a[href^="student"]::before{content:"\1F393"}
+ .nav nav a[href^="complaints"]::before{content:"\1F4AC"}
+ .nav nav a[href^="profile"]::before{content:"\1F464"}
+ .nav nav a[href^="logout"]::before{content:"\1F6AA"}
+ .nav nav a[href^="login"]::before{content:"\1F511"}
+ .nav nav a[href^="driver.php"]::before{content:"\1F4C5"}
+ .nav nav a[href^="driver_login"]::before,.nav nav a[href^="admin_login"]::before{content:"\1F511"}
+ .nav nav a[href^="verify_ticket"]::before{content:"\2705"}
+ .nav nav a[href^="admin.php"]::before{content:"\1F6E0"}
+ .nav nav a[href^="admin_routes"]::before{content:"\1F6E3"}
+ .nav nav a[href^="interrupt_auto"]::before{content:"\1F4B8"}
+ .nav nav a[href^="staff.php"]::before{content:"\1F9FE"}
+ .nav nav a[href^="staff_card"]::before{content:"\1F4B3"}
+ .nav nav a[href^="card_approve"]::before{content:"\2714"}
+ .nav nav a[href^="operator"]::before{content:"\1F68D"}
+ .nav nav a[href^="assign_driver"]::before{content:"\1F9D1"}
+ .nav nav a[href^="police.php"]::before{content:"\1F693"}
+ .nav nav a[href^="police_control"]::before{content:"\1F6D1"}
+ footer{margin-left:0}
+}
+@media print{body{padding-left:0!important}}
+
+/* ===== Desktop: left side menu (icons + names, like an app sidebar) ===== */
+@media(min-width:900px){
+ body{padding-left:264px}
+ .nav{position:fixed;left:0;top:0;bottom:0;width:264px;z-index:30;display:flex;flex-direction:column;align-items:stretch;flex-wrap:nowrap;gap:14px;padding:20px 14px;background:var(--w);border-bottom:0;border-right:1px solid var(--ln);overflow-y:auto;backdrop-filter:none}
+ .nav .logo{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:2px 8px;font-size:1.75rem}
+ .nav .burger{display:none}
+ .nav nav{display:flex!important;flex:1;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:2px;margin:0;width:100%;min-height:min-content}
+ .nav nav a{display:flex;align-items:center;gap:12px;white-space:nowrap;flex:none;padding:10px 12px;border-radius:12px;font-size:.95rem;font-weight:500;color:var(--dk)}
+ .nav nav a::before{content:"\2022";width:24px;text-align:center;font-size:1.1rem;flex:none}
+ .nav nav a::after{display:none!important}
+ .nav nav a:hover{background:var(--c1);color:var(--dk)}
+ .nav nav a.cur{background:var(--c1);color:var(--pri);font-weight:700}
+ .nav nav a.sos{margin:6px 0;border:0;border-radius:12px;background:#fee2e2;color:#991b1b;font-weight:700}
+ .nav nav a.btn{justify-content:center;margin-top:8px;color:#fff;box-shadow:none}
+ .nav nav a.btn::before{display:none}
+ .nav nav a[href="profile.php"]{margin-top:auto;border-top:1px solid var(--ln);border-radius:0 0 12px 12px;padding-top:14px}
+ .nav nav a[href="index.php"]::before{content:"\1F3E0"}
+ .nav nav a[href="search.php"]::before{content:"\1F68C"}
+ .nav nav a[href="areas.php"]::before{content:"\1F5FA\FE0F"}
+ .nav nav a[href="near.php"]::before,.nav nav a[href="nearme.php"]::before,.nav nav a[href="near_me.php"]::before,.nav nav a[href="nearby.php"]::before{content:"\1F4CD"}
+ .nav nav a[href="track.php"]::before{content:"\1F4E1"}
+ .nav nav a[href="reports.php"]::before{content:"\26A0\FE0F"}
+ .nav nav a[href="groups.php"]::before{content:"\1F465"}
+ .nav nav a[href="plan.php"]::before{content:"\1F9ED"}
+ .nav nav a[href="my_bookings.php"]::before{content:"\1F3AB"}
+ .nav nav a[href="card.php"]::before,.nav nav a[href="staff_card.php"]::before{content:"\1F4B3"}
+ .nav nav a[href="sos.php"]::before{content:"\1F198"}
+ .nav nav a[href="notifications.php"]::before{content:"\1F514"}
+ .nav nav a[href="student.php"]::before{content:"\1F393"}
+ .nav nav a[href="complaints.php"]::before{content:"\1F4AC"}
+ .nav nav a[href="profile.php"]::before{content:"\1F464"}
+ .nav nav a[href="logout.php"]::before{content:"\1F6AA"}
+ .nav nav a[href="login.php"]::before,.nav nav a[href="driver_login.php"]::before,.nav nav a[href="admin_login.php"]::before{content:"\1F511"}
+ .nav nav a[href="driver.php"]::before{content:"\1F4C5"}
+ .nav nav a[href="verify_ticket.php"]::before{content:"\2705"}
+ .nav nav a[href="admin.php"]::before{content:"\1F6E0\FE0F"}
+ .nav nav a[href="admin_routes.php"]::before{content:"\1F6E3\FE0F"}
+ .nav nav a[href="interrupt_auto.php"]::before{content:"\1F4B8"}
+ .nav nav a[href="staff.php"]::before{content:"\1F9FE"}
+ .nav nav a[href="card_approve.php"]::before{content:"\2611\FE0F"}
+ .nav nav a[href="operator.php"]::before{content:"\1F68D"}
+ .nav nav a[href="assign_driver.php"]::before{content:"\1F9D1\200D\2708\FE0F"}
+ .nav nav a[href="police.php"]::before{content:"\1F46E"}
+ .nav nav a[href="police_control.php"]::before{content:"\1F694"}
+}

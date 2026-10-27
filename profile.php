@@ -1,0 +1,11 @@
+<?php require 'config.php';$u=need();
+if($_POST){chk();if($_POST['a']=='profile')q('UPDATE users SET name=?,phone=?,emergency_contact=? WHERE id=?',[trim($_POST['name']),trim($_POST['phone']),trim($_POST['ec']),$u['id']]);
+ if($_POST['a']=='student'&&trim($_POST['sid'])!==''){if(preg_match('/^\d{4}-\d{2,4}$/',trim($_POST['ses']))&&$_POST['exp']>=date('Y-m-d'))q("UPDATE users SET student_id=?,student_session=?,student_expiry=?,student_status='pending' WHERE id=?",[trim($_POST['sid']),trim($_POST['ses']),$_POST['exp'],$u['id']]);else{flash('Enter a session like 2025-26 and a card expiry date in the future.');header('Location: profile.php');exit;}}
+ flash('Saved.');header('Location: profile.php');exit;}
+head('Profile');?><h2>My profile</h2>
+<form method="post" class="card"><?=tok()?><input type="hidden" name="a" value="profile"><label>Name<input name="name" value="<?=e($u['name'])?>" required></label><label>Phone<input name="phone" value="<?=e($u['phone'])?>"></label><label>Emergency contact (phone or email)<input name="ec" value="<?=e($u['emergency_contact'])?>"></label><button class="btn">Save changes</button></form>
+<form method="post" class="card"><?=tok()?><input type="hidden" name="a" value="student"><h3>Student discount</h3><p>Status: <span class="pill <?=e($u['student_status'])?>"><?=e($u['student_status'])?></span><?=($u['student_status']=='verified'&&!is_student($u))?' <span class="pill cancelled">expired</span>':''?></p>
+<?php $p=setting('student_pct',50);$ex=round(50*(100-$p)/100,2);
+if(is_student($u))echo '<p class="flash">Verified. You get '.$p.'% off local bus fares. Example: a ৳50 fare costs you ৳'.$ex.'.</p>';
+elseif($u['student_status']=='pending')echo '<p class="flash">Submitted, waiting for admin. Once verified, a ৳50 local bus fare will cost you ৳'.$ex.'.</p>';?>
+<label>Student ID number<input name="sid" value="<?=e($u['student_id'])?>" required></label><label>Session (e.g. 2025-26)<input name="ses" value="<?=e($u['student_session'])?>" pattern="\d{4}-\d{2,4}" required></label><label>ID card valid until<input type="date" name="exp" value="<?=e($u['student_expiry'])?>" required></label><button class="btn">Submit for verification</button></form><?php foot();

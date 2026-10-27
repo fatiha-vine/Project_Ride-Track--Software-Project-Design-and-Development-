@@ -1,0 +1,19 @@
+<?php require 'config.php';$mu=me();if($mu&&$mu['role']!='passenger'){header('Location: '.portal_home($mu['role']));exit;}$cc=strtolower(trim($_SERVER['HTTP_CACHE_CONTROL']??''));$reload=in_array($cc,['max-age=0','no-cache'],true);$splash=empty($_SESSION['splash'])||isset($_GET['splash'])||$reload;$_SESSION['splash']=1;head('Home');if($splash)include 'splash.inc.php';
+$ic=fn($p)=>'<span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'.$p.'</svg></span>';?>
+<section class="hero2"><div><span class="eyebrow">Local and long-distance buses</span><h1>Travel smarter,<br>reach home safely.</h1><p>Search routes, book seats, follow your bus live and get help on the road, all in one place.</p><a class="btn" href="plan.php">Plan a trip</a> <a class="btn ghost" href="search.php?mode=local">Local buses</a></div>
+<form class="search card" action="search.php"><div class="seg"><label><input type="radio" name="mode" value="intercity" checked><span>Long-distance</span></label><label><input type="radio" name="mode" value="local"><span>Local bus</span></label></div>
+<label>From<input name="from" list="cities" placeholder="Dhaka" autocomplete="off"></label>
+<button type="button" class="btn ghost sm swap" onclick="var f=this.form,t=f.from.value;f.from.value=f.to.value;f.to.value=t">⇄ Swap</button>
+<label>To<input name="to" list="cities" placeholder="Chattogram" autocomplete="off"></label><label>Date (optional)<input type="date" name="date"></label>
+<button class="btn" style="width:100%;margin-top:8px">Find buses</button>
+<datalist id="cities"><?php foreach(q('SELECT name c FROM stops ORDER BY name')->fetchAll() as $c)echo '<option value="'.e($c['c']).'">';?></datalist></form></section>
+<div class="stats"><div><b>2</b><span>Bus systems, local and long-distance</span></div><div><b>Live</b><span>GPS bus tracking</span></div><div><b><?=setting('student_pct',50)?>%</b><span>Student discount</span></div><div><b>SOS</b><span>Emergency help</span></div></div>
+<h2>How it works</h2><div class="grid steps"><div class="card"><div class="n">1</div><h3>Search your route</h3><p class="muted">Choose local or long-distance, then your stops and date.</p></div><div class="card"><div class="n">2</div><h3>Book or plan</h3><p class="muted">Pick a seat, pay with bKash or your travel card, or plan ahead with a time.</p></div><div class="card"><div class="n">3</div><h3>Track and ride</h3><p class="muted">Watch the bus come to your stop and show your e-ticket.</p></div></div>
+<h2 style="margin-top:34px">Everything you need</h2><div class="grid">
+<div class="card"><?=$ic('<path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/>')?><h3>Tickets</h3><p class="muted">E-tickets and manual tickets, with easy cancellation and refunds.</p></div>
+<div class="card"><?=$ic('<path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/>')?><h3>Live tracking</h3><p class="muted">See the latest bus location, crowding and trip status.</p></div>
+<div class="card"><?=$ic('<path d="M2 9l10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5"/>')?><h3>Student fare</h3><p class="muted">Verified students pay less on every trip.</p></div>
+<div class="card"><?=$ic('<path d="M12 3l9 16H3zM12 10v4M12 17v.5"/>')?><h3>Road reports</h3><p class="muted">Report accidents and bad roads, and confirm what others share.</p></div>
+<div class="card"><?=$ic('<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/>')?><h3>SOS help</h3><p class="muted">Send an emergency request with your location.</p></div>
+<div class="card"><?=$ic('<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M15 15c3 0 6 1 6 4"/>')?><h3>Route groups</h3><p class="muted">Join commuters who travel your route every day.</p></div></div>
+<?php foot();

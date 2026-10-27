@@ -1,0 +1,13 @@
+USE ridetrack;
+ALTER TABLE bookings MODIFY user_id INT NULL, ADD manual_name VARCHAR(80) NULL;
+ALTER TABLE buses ADD status ENUM('pending','approved','rejected','suspended') DEFAULT 'pending', ADD operator_id INT NULL, ADD license_doc VARCHAR(80) NULL;
+UPDATE buses SET status='approved', operator_id=3;
+ALTER TABLE trips MODIFY status ENUM('scheduled','running','delayed','completed','cancelled','interrupted') DEFAULT 'scheduled';
+ALTER TABLE users ADD emergency_contact VARCHAR(60) NULL;
+ALTER TABLE reports ADD photo VARCHAR(80) NULL;
+CREATE TABLE settings(k VARCHAR(30) PRIMARY KEY,v VARCHAR(20));
+INSERT INTO settings VALUES('student_pct','50'),('cancel_fee_pct','10');
+CREATE TABLE notifications(id INT AUTO_INCREMENT PRIMARY KEY,user_id INT,msg VARCHAR(255),seen TINYINT DEFAULT 0,created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE complaints(id INT AUTO_INCREMENT PRIMARY KEY,user_id INT,subject VARCHAR(100),message VARCHAR(500),status ENUM('open','resolved') DEFAULT 'open',created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE password_resets(id INT AUTO_INCREMENT PRIMARY KEY,user_id INT,token CHAR(64),expires DATETIME,used TINYINT DEFAULT 0);
+INSERT INTO users(name,email,password,role) VALUES('Ticketing Staff','staff@ridetrack.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','staff');
