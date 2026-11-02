@@ -8,6 +8,11 @@ $areas=q('SELECT id,name,lat,lng,radius_m r FROM areas ORDER BY name')->fetchAll
 foreach($areas as &$a){$a['id']=(int)$a['id'];$a['lat']=(float)$a['lat'];$a['lng']=(float)$a['lng'];$a['r']=(int)$a['r'];}unset($a);
 $buses=q("SELECT id,reg_number reg,operator FROM buses WHERE status='approved' AND kind='local' ORDER BY operator,reg_number")->fetchAll();
 foreach($buses as &$b){$b['id']=(int)$b['id'];$b['areas']=array_map('intval',array_column(bus_areas($b['id']),'id'));}unset($b);
+foreach($buses as &$b){$b['rt']=[];
+ foreach(q('SELECT DISTINCT route_id FROM schedules WHERE bus_id=?',[$b['id']])->fetchAll(PDO::FETCH_COLUMN) as $rid){
+  $ar=[];foreach(q('SELECT s.area_id,rs.offset_min FROM route_stops rs JOIN stops s ON s.id=rs.stop_id WHERE rs.route_id=? AND s.area_id IS NOT NULL ORDER BY rs.seq',[$rid])->fetchAll() as $x)$ar[]=[(int)$x['area_id'],(int)$x['offset_min']];
+  $tm=array_map(fn($t)=>substr($t,0,5),q('SELECT depart_time FROM schedules WHERE route_id=? AND bus_id=? ORDER BY depart_time',[$rid,$b['id']])->fetchAll(PDO::FETCH_COLUMN));
+  if($ar&&$tm)$b['rt'][]=['a'=>$ar,'t'=>$tm];}}unset($b);
 $cfg=['rl'=>fare_rate('local'),'ml'=>fare_min('local'),'pct'=>(int)setting('student_pct',50),'student'=>($u&&is_student($u))];
 head('Areas and fares');?>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -47,7 +52,15 @@ document.getElementById('gps').onclick=function(){const h=document.getElementByI
    else h.textContent='Your location ('+p.coords.latitude.toFixed(4)+', '+p.coords.longitude.toFixed(4)+') seems to be outside Dhaka.'},
   e=>{btn.disabled=false;h.textContent=e.code==1?'Location is blocked for this site. Click the icon left of the address bar, set Location to Allow, then reload the page.':e.code==3?'Location took too long. Turn on Windows Location (Settings > Privacy & security > Location) and try again.':'Could not get your location. Turn on Windows Location service and try again.'},
   {enableHighAccuracy:false,timeout:12000,maximumAge:60000})};
-function busHtml(list){return list.length?list.map(b=>'<div class="muted">🚌 '+esc(b.operator)+' · '+esc(b.reg)+' — <a href="track.php?bus='+b.id+'">Track</a></div>').join(''):'<p class="muted">No local bus serves this pair yet.</p>'}
+const fmt=m=>{m=((m%1440)+1440)%1440;const h=Math.floor(m/60),mi=m%60;return (h%12||12)+':'+String(mi).padStart(2,'0')+(h<12?' AM':' PM')};
+function times(b,f,t){let out=[];(b.rt||[]).forEach(r=>{const i=r.a.findIndex(x=>x[0]===f);if(i<0)return;if(t){const j=r.a.findIndex((x,k)=>k>i&&x[0]===t);if(j<0)return}
+  const o=r.a[i][1]||0;r.t.forEach(s=>{const p=s.split(':');out.push(+p[0]*60+ +p[1]+o)})});return [...new Set(out)].sort((x,y)=>x-y)}
+function busHtml(list,f,t){if(!list.length)return '<p class="muted">No local bus serves this pair yet.</p>';
+ const n=new Date(),nm=n.getHours()*60+n.getMinutes();
+ return list.map(b=>{const all=times(b,f,t),up=all.filter(m=>m>=nm);let tm='';
+  if(all.length){tm='<div>'+(up.length?'⏰ Next: <strong>'+up.slice(0,3).map(fmt).join(', ')+'</strong>':'⏰ No more buses today. First tomorrow: <strong>'+fmt(all[0])+'</strong>')+'</div><details><summary class="muted">All times today ('+all.length+')</summary><div class="muted">'+all.map(fmt).join(' · ')+'</div></details>'}
+  else tm='<div class="muted">Timetable not available.</div>';
+  return '<div class="card" style="margin:6px 0"><div>🚌 '+esc(b.operator)+' · '+esc(b.reg)+' — <a href="track.php?bus='+b.id+'">Track</a></div>'+tm+'</div>'}).join('')}
 function draw(){sf.value=F||'';st.value=T||'';
  A.forEach(a=>{const c=a.id===F?'#16a34a':a.id===T?'#dc2626':'#0f7a8a';circ[a.id].setStyle({color:c,fillOpacity:(a.id===F||a.id===T)?.35:.12});
   lbl[a.id].setIcon(L.divIcon({className:'',html:'<div class="albl'+(a.id===F?' f':a.id===T?' t':'')+'">'+esc(a.name)+'</div>',iconSize:null}))});
@@ -55,8 +68,8 @@ function draw(){sf.value=F||'';st.value=T||'';
  if(!F){res.innerHTML='<p class="muted">Tap the map to choose your pickup area.</p>';return}
  const f=byId[F];let h='';
  if(T){const t=byId[T],d=dist(f,t),fr=fare(d);line=L.polyline([[f.lat,f.lng],[t.lat,t.lng]],{color:'#0f7a8a',weight:4,dashArray:'6 8'}).addTo(map);map.fitBounds(line.getBounds(),{padding:[40,40]});
-  h+='<div class="fbig">'+esc(f.name)+' → '+esc(t.name)+'</div><p>About '+d.toFixed(1)+' km · Fare <strong>৳'+fr+'</strong> · Student fare <strong>৳'+stu(fr)+'</strong>'+(CFG.student?' (yours)':'')+'</p><h4>Buses serving both areas</h4>'+busHtml(both(F,T));}
- else h+='<div class="fbig">'+esc(f.name)+'</div><h4>Buses in this area</h4>'+busHtml(B.filter(b=>b.areas.includes(F)))+'<p class="muted"><b>Now choose your drop area:</b> tap a row in the table below, or tap a circle on the map, or use the Drop area box at the top.</p>';
+  h+='<div class="fbig">'+esc(f.name)+' → '+esc(t.name)+'</div><p>About '+d.toFixed(1)+' km · Fare <strong>৳'+fr+'</strong> · Student fare <strong>৳'+stu(fr)+'</strong>'+(CFG.student?' (yours)':'')+'</p><h4>Buses serving both areas</h4>'+busHtml(both(F,T),F,T);}
+ else h+='<div class="fbig">'+esc(f.name)+'</div><h4>Buses in this area</h4>'+busHtml(B.filter(b=>b.areas.includes(F)),F,null)+'<p class="muted"><b>Now choose your drop area:</b> tap a row in the table below, or tap a circle on the map, or use the Drop area box at the top.</p>';
  const rows=A.filter(a=>a.id!==F).map(a=>({a:a,d:dist(f,a)})).sort((x,y)=>x.d-y.d).map(o=>{const fr=fare(o.d),n=both(F,o.a.id).length;
   return '<tr data-id="'+o.a.id+'" style="cursor:pointer'+(o.a.id===T?';font-weight:700':'')+'"><td>'+esc(o.a.name)+'</td><td>'+o.d.toFixed(1)+' km</td><td>৳'+fr+'</td><td>৳'+stu(fr)+'</td><td>'+n+'</td></tr>'}).join('');
  h+='<h4>Fare from '+esc(f.name)+' to every area <span class="muted">(tap a row to set it as drop)</span></h4><div class="sc"><table><tr><th>Area</th><th>Distance</th><th>Fare</th><th>Student</th><th>Buses</th></tr>'+rows+'</table></div>';

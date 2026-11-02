@@ -53,7 +53,7 @@ if($_POST&&$has){chk();
 head('Import from map');?>
 <h2>Import Dhaka stops and routes from the map</h2>
 <p class="muted">One click fetches real bus stops and bus routes for Dhaka from OpenStreetMap, like the maps ride apps use. Stops are matched to their area, routes get distance based fares (students pay the discounted share), and a daily timetable is added. Run it again any time, routes already imported are skipped.</p>
-<?php if(!$has)echo '<p class="err">First run <strong>update22_osm.sql</strong> in phpMyAdmin, then reload this page.</p>';?>
+<?php if(!$has)echo '<p class="err">Import <strong>database.sql</strong> in phpMyAdmin first, then reload this page.</p>';?>
 <form method="post" class="card"><?=tok()?><div class="grid">
 <label>Most routes to add (return trips count too)<input type="number" name="max" value="30" min="0" max="150"></label>
 <label>First bus<input type="time" name="first" value="07:00"></label><label>Last bus<input type="time" name="last" value="21:00"></label>
